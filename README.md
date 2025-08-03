@@ -78,8 +78,9 @@ git clone [URL_DEL_REPOSITORIO]
 cd immersive-art-iot
 ```
 
-2. **Instalar dependencias**
+2. **Instalar dependencias del proyecto web**
 ```bash
+cd web
 npm install
 ```
 
@@ -102,7 +103,7 @@ http://localhost:3000
 
 ### Variables de Entorno
 
-Crear archivo `.env.local` en la raíz del proyecto:
+Crear archivo `.env.local` en el directorio `web/`:
 
 ```env
 # MQTT Configuration
@@ -157,25 +158,23 @@ El sistema incluye un usuario mock para desarrollo:
 ## 📁 Estructura del Proyecto
 
 ```
-src/
-├── app/                    # Next.js App Router
-│   ├── admin/             # Panel de administración
-│   ├── usuario/           # Dashboard de usuario
-│   ├── mqtt-test/         # Página de pruebas MQTT
-│   └── api/               # API routes (actualmente vacío)
-├── components/            # Componentes React reutilizables
-│   ├── Login.tsx         # Formulario de autenticación
-│   ├── ProtectedRoute.tsx # Protección de rutas
-│   ├── MQTTMetrics.tsx   # Métricas de conexión
-│   └── ...
-├── contexts/             # Contextos de React
-│   └── AuthContext.tsx   # Contexto de autenticación
-├── hooks/                # Custom hooks
-│   └── useMQTT.ts        # Hook para datos MQTT
-├── lib/                  # Utilidades y configuraciones
-│   ├── mqtt.ts          # Servicio MQTT
-│   └── user-roles.ts    # Definición de roles
-└── types/                # Definiciones de TypeScript
+immersive-art-iot/
+├── firmware/              # Código para dispositivos IoT (futuro)
+├── web/                   # Aplicación web Next.js
+│   ├── src/
+│   │   ├── app/          # Next.js App Router
+│   │   │   ├── admin/    # Panel de administración
+│   │   │   ├── usuario/  # Dashboard de usuario
+│   │   │   ├── mqtt-test/# Página de pruebas MQTT
+│   │   │   └── api/      # API routes
+│   │   ├── components/   # Componentes React reutilizables
+│   │   ├── contexts/     # Contextos de React
+│   │   ├── hooks/        # Custom hooks
+│   │   └── lib/          # Utilidades y configuraciones
+│   ├── public/           # Archivos estáticos
+│   └── package.json      # Dependencias del proyecto web
+├── diagrams/             # Diagramas y documentación técnica
+└── README.md            # Documentación del proyecto
 ```
 
 ## 🔌 MQTT Topics
@@ -226,7 +225,25 @@ Acceder a `/mqtt-test` para:
 
 ### Comandos de Desarrollo
 
+**Desde la raíz del proyecto:**
 ```bash
+# Instalar dependencias
+npm run install-web
+
+# Desarrollo con Turbopack
+npm run dev            # Puerto 3000
+
+# Build de producción
+npm run build
+
+# Linting
+npm run lint
+```
+
+**O desde el directorio web:**
+```bash
+cd web
+
 # Desarrollo con puerto específico
 npm run local          # Puerto 3001
 
@@ -243,7 +260,7 @@ npm run lint
 ## 🔧 Configuración Avanzada
 
 ### Personalización de Topics
-Editar `src/lib/mqtt.ts` para cambiar los topics MQTT:
+Editar `web/src/lib/mqtt.ts` para cambiar los topics MQTT:
 
 ```typescript
 export const MQTT_TOPICS = {
@@ -264,7 +281,7 @@ Actualmente implementado como mock. Para producción, integrar con Firebase Auth
 ### Problemas Comunes
 
 1. **MQTT no conecta**
-   - Verificar configuración en `.env.local`
+   - Verificar configuración en `web/.env.local`
    - Comprobar que el broker esté disponible
    - Revisar logs en consola del navegador
 
@@ -275,7 +292,7 @@ Actualmente implementado como mock. Para producción, integrar con Firebase Auth
 
 3. **Problemas de autenticación**
    - El sistema usa mock auth para desarrollo
-   - Verificar configuración en `AuthContext.tsx`
+   - Verificar configuración en `web/src/contexts/AuthContext.tsx`
 
 ### Logs de Debug
 Los logs importantes aparecen en la consola del navegador con prefijos:
