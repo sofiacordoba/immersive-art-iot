@@ -10,9 +10,11 @@ Sistema web para monitoreo y control de salas de arte inmersivo mediante IoT, co
 - [Configuración](#-configuración)
 - [Uso](#-uso)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
-- [API y Endpoints](#-api-y-endpoints)
 - [MQTT Topics](#-mqtt-topics)
 - [Roles de Usuario](#-roles-de-usuario)
+- [Testing](#-testing)
+- [Configuración Avanzada](#-configuración-avanzada)
+- [Troubleshooting](#-troubleshooting)
 - [Contribución](#-contribución)
 
 ## ✨ Características
@@ -159,7 +161,7 @@ El sistema incluye un usuario mock para desarrollo:
 
 ```
 immersive-art-iot/
-├── firmware/              # Código para dispositivos IoT (futuro)
+├── firmware/              # Código para dispositivos IoT (ESP32 + sensores)
 ├── web/                   # Aplicación web Next.js
 │   ├── src/
 │   │   ├── app/          # Next.js App Router
@@ -184,12 +186,11 @@ immersive-art-iot/
 /sala/123/tempActual     # Temperatura actual
 /sala/123/humActual      # Humedad actual
 /sala/123/presencia      # Estado de presencia
-/sala/123/comando        # Estado de obra multimedia
 ```
 
 ### Topics de Control
 ```bash
-/sala/123/comando        # Control de obra (ON/OFF)
+/sala/123/comando        # Control de obra multimedia(ON/OFF)
 /sala/123/setTempMin     # Temperatura mínima
 /sala/123/setTempMax     # Temperatura máxima
 /sala/123/setHumMin      # Humedad mínima
